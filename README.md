@@ -9,6 +9,10 @@ Minimal portfolio with Go backend and Preact frontend.
 ```bash
 pnpm install
 pnpm go-install
+
+# Source environment variables (required for AWS S3 functionality)
+source .env
+
 pnpm dev
 ```
 

@@ -1,26 +1,28 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	"net/http"
+	"os"
+	"portfolio/apis"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
-	mux := http.NewServeMux()
+	app := fiber.New()
 
-	mux.HandleFunc("/api/", handleAPI)
+	apis.SetupRoutes(app)
 
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fs := http.FileServer(http.Dir("../dist/"))
+	app.Static("/", "../dist")
 
-		if _, err := http.Dir("../dist/").Open(r.URL.Path); err != nil {
-			http.ServeFile(w, r, "../dist/index.html")
-			return
-		}
-
-		fs.ServeHTTP(w, r)
+	app.Use(func(c *fiber.Ctx) error {
+		return c.SendFile("../dist/index.html")
 	})
 
-	log.Println("Server starting on :8080")
-	log.Fatal(http.ListenAndServe(":8080", mux))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	log.Fatalln(app.Listen(fmt.Sprintf(":%v", port)))
 }

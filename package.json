@@ -4,7 +4,8 @@
   "scripts": {
     "build": "vite build",
     "dev": "NODE_NO_WARNINGS=1 concurrently \"./node_modules/.bin/vite --port 3000 --host localhost\" \"pnpm run dev:server\"",
-    "dev:server": "cd backend && go run .",
+    "dev:server": "cd backend && bash -c 'source ../.env && go run .'",
+    "env": "bash -c 'source .env && cd backend && go run .'",
     "start": "./run.sh",
     "preview": "vite preview",
     "lint": "pnpm run lint:frontend && pnpm run lint:go",
@@ -13,6 +14,10 @@
     "format": "pnpm run format:frontend && pnpm run format:go",
     "format:frontend": "biome format --write src/",
     "format:go": "cd backend && go fmt ./...",
+    "test": "pnpm run test:go",
+    "test:go": "cd backend && go test -v ./...",
+    "test:coverage": "cd backend && go test -v -cover ./...",
+    "test:bench": "cd backend && go test -bench=. ./...",
     "go-install": "go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest"
   },
   "dependencies": {
