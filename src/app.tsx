@@ -1,4 +1,4 @@
-import { ComponentChildren } from "preact";
+import type { ComponentChildren } from "preact";
 
 interface AppProps {
   children: ComponentChildren;
@@ -7,4 +7,3 @@ interface AppProps {
 export function App({ children }: AppProps) {
   return <>{children}</>;
 }
-

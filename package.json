@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "pnpm run lint:frontend && pnpm run lint:go",
     "lint:frontend": "biome check src/",
-    "lint:go": "cd backend && go fmt ./... && go vet ./... && golangci-lint run",
+    "lint:go": "cd backend && go fmt ./... && go vet ./... && ~/go/bin/golangci-lint run",
     "format": "pnpm run format:frontend && pnpm run format:go",
     "format:frontend": "biome format --write src/",
     "format:go": "cd backend && go fmt ./...",

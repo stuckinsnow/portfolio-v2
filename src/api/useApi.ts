@@ -1,4 +1,4 @@
-import { useState, useEffect } from "preact/hooks";
+import { useCallback, useEffect, useState } from "preact/hooks";
 
 interface UseApiReturn<T> {
   data: T | null;
@@ -9,7 +9,7 @@ interface UseApiReturn<T> {
 
 export function useApi<T = any>(
   endpoint: string,
-  options?: RequestInit
+  options?: RequestInit,
 ): UseApiReturn<T> {
   const [state, setState] = useState<UseApiReturn<T>>({
     data: null,
@@ -18,28 +18,28 @@ export function useApi<T = any>(
     refetch: () => {},
   });
 
-  const fetchData = async () => {
-    setState(prev => ({ ...prev, loading: true, error: null }));
-    
+  const fetchData = useCallback(async () => {
+    setState((prev) => ({ ...prev, loading: true, error: null }));
+
     try {
       const response = await fetch(endpoint, options);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      setState(prev => ({ ...prev, data, loading: false }));
+      setState((prev) => ({ ...prev, data, loading: false }));
     } catch (err) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
-        error: err instanceof Error ? err.message : 'An error occurred',
+        error: err instanceof Error ? err.message : "An error occurred",
         loading: false,
       }));
     }
-  };
+  }, [endpoint, options]);
 
   useEffect(() => {
     fetchData();
-  }, [endpoint]);
+  }, [fetchData]);
 
   return {
     ...state,

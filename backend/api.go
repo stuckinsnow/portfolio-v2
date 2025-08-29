@@ -48,5 +48,8 @@ func handlePortfolio(w http.ResponseWriter, _ *http.Request) {
 		},
 	}
 
-	json.NewEncoder(w).Encode(data)
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+		return
+	}
 }
