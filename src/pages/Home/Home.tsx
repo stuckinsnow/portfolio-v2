@@ -1,21 +1,14 @@
-import { useApi } from "../api/useApi";
-
-interface Project {
-  name: string;
-  description: string;
-}
-
-interface PortfolioData {
-  projects: Project[];
-  skills: string[];
-}
+import { useApi } from "../../api/useApi";
+import { PortfolioData } from "./types";
 
 export function Home() {
   const { data: portfolio, loading, error } = useApi<PortfolioData>("/api/portfolio");
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!portfolio) return <div>No data available</div>;
+  switch (true) {
+    case loading: return <div>Loading...</div>;
+    case !!error: return <div>Error: {error}</div>;
+    case !portfolio: return <div>No data available</div>;
+  }
 
   return (
     <main>
