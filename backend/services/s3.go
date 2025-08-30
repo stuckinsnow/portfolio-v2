@@ -54,7 +54,6 @@ func (s *S3Service) HandleListObjects(c *fiber.Ctx) error {
 	var objects []string
 	for _, obj := range result.Contents {
 		objects = append(objects, *obj.Key)
-		log.Printf("Object: %s", *obj.Key)
 	}
 
 	return c.JSON(fiber.Map{

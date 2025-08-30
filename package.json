@@ -4,7 +4,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "NODE_NO_WARNINGS=1 concurrently \"./node_modules/.bin/vite --port 3000 --host localhost\" \"pnpm run dev:server\"",
-    "dev:server": "cd backend && bash -c 'source ../.env && go run .'",
+    "dev:server": "cd backend && bash -c 'source ../.env && go run github.com/air-verse/air'",
     "env": "bash -c 'source .env && cd backend && go run .'",
     "start": "./run.sh",
     "preview": "vite preview",

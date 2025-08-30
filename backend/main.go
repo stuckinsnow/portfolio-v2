@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"portfolio/apis"
+	"portfolio/routes"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -12,7 +12,7 @@ import (
 func main() {
 	app := fiber.New()
 
-	apis.SetupRoutes(app)
+	routes.SetupRoutes(app)
 
 	app.Static("/", "../dist")
 
